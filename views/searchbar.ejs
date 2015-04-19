@@ -187,7 +187,7 @@
 </style>
 
 <section class="main">
-    <form class="search" method="post" action="index.html" >
+    <form class="search" method="post">
         <input id="searchinput" type="text" name="q" placeholder="Search..." />
         <ul id="results" class="results" >
         </ul>
@@ -211,20 +211,5 @@ $.ajax({
             a.href = data[i]['url'];
         }
     }
-});
-
-router.get('/search', function (req, res, next) {
-    bose.getSources(function(err, body){
-
-        console.log(body);
-        var source;
-        var sourceAccount;
-        var searchString;
-
-        bose.search()(
-
-        });
-    });
-
 });
 </script>

@@ -123,5 +123,16 @@ router.get('/next_track', function (req, res, next) {
 
 });
 
+router.get('/search', function (reg,res, next) {
+    bose.getSources(function(err, body){
+        console.log(body);
+        var source;
+        var sourceAccount;
+        var searchString;
 
+        bose.search(){
+
+        });
+    });
+});
 module.exports = router;
