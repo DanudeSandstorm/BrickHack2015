@@ -1,11 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+    <% include includes/head_includes.ejs %>
+</head>
+<body>
+<h1><%= title %></h1>
+
+<div class="ui primary button" id="power">
+    Power
+</div>
+<div id="feedback">
+    Waiting!
+</div>
+
+<script>
+    $("#power").click(function () {
+        $.ajax({
+            url: '/bose/power', success: function (result) {
+
+            }
+        });
+    });
+</script>
+</body>
 </html>
