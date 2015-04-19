@@ -3,6 +3,10 @@ var parser = require('xml2json');
 var rootPath = "";
 
 
+var parserOptions = {
+    sanitize: false
+};
+
 module.exports = {
     setRoot: function (pth, cb) {
         rootPath = pth;
@@ -21,7 +25,7 @@ module.exports = {
 
            // console.log(parser.toJson(body));
             if (!err) {
-                cb(null, parser.toJson(body));
+                cb(null, parser.toJson(body, parserOptions));
             } else {
                 console.log(err);
                 cb(err);
@@ -30,14 +34,14 @@ module.exports = {
     },
 
     getSong: function(cb){
-        request.post(  {
+        request.get(  {
             url:rootPath + '/now_playing',
             headers: {'Content-Type': 'text/xml'}
         }, function (err, res, body) {
 
 
-            body=parser.toJson(body);
-            console.log(body);
+            body=parser.toJson(body, parserOptions);
+            //console.log(body);
             if (!err) {
                 cb(null, body);
             } else {
