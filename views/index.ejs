@@ -8,20 +8,53 @@
 <h1><%= title %></h1>
 
 <div class="ui primary button" id="power">
-    Power
+    <i class="fa fa-power-off"></i>
+</div>
+<div class="ui icon buttons">
+    <div class="ui button" id="voldown"><i class="fa fa-volume-down"></i></div>
+    <div class="ui button" id="volup"><i class="fa fa-volume-up"></i></div>
 </div>
 <div id="feedback">
     Waiting!
 </div>
 
 <script>
+    // power button
     $("#power").click(function () {
         $.ajax({
             url: '/bose/power', success: function (result) {
-
+                $("#feedback").html("Updated!!");
+                setTimeout(function () {
+                    $("#feedback").html("Waiting!");
+                }, 2000);
             }
         });
     });
+
+    // volume down button
+    $("#voldown").click(function () {
+        $.ajax({
+            url: '/bose/volumedown', success: function (result) {
+                $("#feedback").html("Updated!!");
+                setTimeout(function () {
+                    $("#feedback").html("Waiting!");
+                }, 2000);
+            }
+        });
+    });
+
+    // volume up button
+    $("#volup").click(function () {
+        $.ajax({
+            url: '/bose/volumeup', success: function (result) {
+                $("#feedback").html("Updated!!");
+                setTimeout(function () {
+                    $("#feedback").html("Waiting!");
+                }, 2000);
+            }
+        });
+    });
+
 </script>
 </body>
 </html>
