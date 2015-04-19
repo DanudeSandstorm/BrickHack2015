@@ -4,15 +4,23 @@ var router = express.Router();
 var bose = require('../APIadaptors/bose');
 var hotness = require('../APIadaptors/hotnessfetcher');
 
-bose.setRoot('http://192.168.2.6:8090', function () {
-
-});
+//bose.setRoot('http://192.168.2.6:8090', function () {
+//
+//});
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
     res.send("ok");
 });
 
+router.post('/setURL', function (req, res, next) {
+
+    bose.setRoot(req.body.url, function(err, data) {
+        res.send('ok');
+    });
+
+
+});
 
 router.get('/power', function (req, res, next) {
 

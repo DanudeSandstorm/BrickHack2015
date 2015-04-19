@@ -7,28 +7,32 @@
 <body style="background: rgba(167, 167, 167, 0.56);">
 
 <div class="ui padded twelve row grid" style="margin-bottom: 100px">
-
     <div class="row">
         <div class="sixteen wide left aligned column">
             <div class="segment" style="text-align: center">
                 <h1><%= title %></h1>
             </div>
         </div>
+        <div style="margin: 0; text-align: center;">
+            <div class="ui action input" style="width: 40%">
+                <input type="text" id="connectAdr" placeholder="http://192.168.2.6:8090">
+                <div class="ui button" id="connectBtn">Connect</div>
+            </div>
+        </div>
     </div>
 
-    <div class="row" >
+    <div class="row">
         <div class="ui two column grid" style="text-align: center; margin: 0">
             <div class="column">
                 <div class="fluid ui primary button" id="power">
                     <i class="fa fa-power-off"></i>
                 </div>
                 <div class="fluid ui icon buttons">
-                    <div class="ui button" id="voldown"><i class="fa fa-volume-down"></i></div>
                     <div class="ui button" id="volup"><i class="fa fa-volume-up"></i></div>
+                    <div class="ui button" id="voldown"><i class="fa fa-volume-down"></i></div>
+
                 </div>
             </div>
-
-
 
 
         </div>
@@ -138,6 +142,19 @@
         });
     });
 
+    $('#connectBtn').click(function() {
+        console.log("helpl");
+
+        var theUrl = $('#connectAdr').val();
+        console.log(theUrl);
+
+        if(theUrl && theUrl != '') {
+            $.post('/bose/setURL', {url: theUrl});
+        }
+
+
+
+    })
 
     // updating song data
     var track = "";
@@ -173,7 +190,7 @@
                 $("#album").html(album);
                 artwork = result['nowPlaying']['art']['$t']
                 console.log(artwork);
-                if(typeof artwork == 'undefined') {
+                if (typeof artwork == 'undefined') {
                     artwork = '/images/default.jpg';
                 }
                 $("#artwork").attr('src', artwork);
