@@ -33,6 +33,7 @@ module.exports = {
         });
     },
 
+
     getSong: function(cb){
         request.get(  {
             url:rootPath + '/now_playing',
@@ -49,7 +50,40 @@ module.exports = {
                 cb(err);
             }
         });
-    }
+    },
 
+    getSources: function(cb) {
+        request.get({
+            url: rootPath + '/sources',
+            headers: {'Content-Type': 'text/xml'}
+        }, function (err, res, body) {
+
+
+            body = parser.toJson(body, parserOptions);
+            //console.log(body);
+            if (!err) {
+                cb(null, body);
+            } else {
+                console.log(err);
+                cb(err);
+            }
+        });
+    },
+
+    search: function(cb, source, sourceAccount, string) {
+        request.post({
+            url: rootPath + '/searchStation', //Pandora only
+            headers: {'Content-Type': 'text/xml'}
+        }, function (err, res, body) {
+
+            body = parser.toJson(body, parserOptions);
+            if (!err) {
+                cb(null, body);
+            } else {
+                console.log(err);
+                cb(err);
+            }
+        })
+    }
 
 };
