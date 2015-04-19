@@ -6,22 +6,12 @@
 </head>
 <body>
 
-<div class="ui padded three row grid">
+<div class="ui padded twelve row grid" style="margin-bottom: 100px">
 
     <div class="row">
-        <div class="eight wide left aligned column">
-            <div class="segment">
+        <div class="sixteen wide left aligned column">
+            <div class="segment" style="text-align: center">
                 <h1><%= title %></h1>
-            </div>
-        </div>
-
-        <div class="eight wide right aligned column">
-            <div class="ui right floated search">
-                <div class="ui icon input">
-                    <input class="prompt" type="text" placeholder="Music Search">
-                    <i class="search icon"></i>
-                </div>
-                <div class="results"></div>
             </div>
         </div>
     </div>
@@ -29,17 +19,13 @@
     <div class="row">
         <div class="ui three column grid">
             <div class="left floated column">
-                <div class="ui primary button" id="power">
+                <div class="fluid ui primary button" id="power">
                     <i class="fa fa-power-off"></i>
                 </div>
             </div>
 
-            <div class="center aligned column">
-                play/pause, skip, like, dislike
-            </div>
-
             <div class="left floated column">
-                <div class="ui icon buttons">
+                <div class="fluid ui icon buttons">
                     <div class="ui button" id="voldown"><i class="fa fa-volume-down"></i></div>
                     <div class="ui button" id="volup"><i class="fa fa-volume-up"></i></div>
                 </div>
@@ -48,45 +34,59 @@
     </div>
 
     <div class="row">
-        <div class="ui three column grid">
-            <div class="left floated column">
-                album art
-            </div>
+        <div class="ui sixteen wide column grid" style="text-align: center; margin: auto;">
 
-            <div class="center aligned column">
-                <p>
-                    Song title
-                </p>
-                <p>
-                    Artist
-                </p>
-                <p>
-                    Album
-                </p>
-                <div id="feedback">
-                    Waiting!
+            <div class="center aligned twelve wide column">
+                <h1 id="track">Track Name</h1>
+
+                <h2 id="artist">Artist Name</h2>
+
+                <h2 id="album">Album Name</h2>
+
+                <div>
+                    <img id="artwork" src="" alt="artwork" style="max-width: 300px;"/>
                 </div>
             </div>
 
-            <div class="left floated column">
+            <div class="left floated">
                 <div class="row">
-                    <div class="ui <%= color%> progress">
+                    <div class="ui yellow active progress">
                         <div class="label">Song's Hipster Score</div>
-                        <div class="bar">
+                        <div class="bar" id="songBar"
+                             style="-webkit-transition-duration: 300ms; transition-duration: 300ms; width: 0%;">
                             <div class="progress"></div>
                         </div>
                     </div>
-                    Hipster-o-meter actual
-                </div>
 
-                <div class="row">
-                    <div class="ui progress">
-                        <div class="label">Your Hipster Level</div>
-                        <div class="bar">
-                            <div class="progress"></div>
+                </div>
+                <br/>
+
+                <div class="six wide column">
+                    <div class="row">
+                        <div class="ui progress">
+                            <div class="label">Your Hipster Target</div>
+                            <div class="bar" id="targetBar"
+                                 style="-webkit-transition-duration: 300ms; transition-duration: 300ms; width: 0%;">
+                                <div class="progress"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="column">
+                        <div class="ui large buttons">
+                            <div class="ui button" id="lessHip">More Pleb!!</div>
+                            <div class="or"></div>
+                            <div class="ui button" id="moreHip">More Hipster!!</div>
                         </div>
                     </div>
-                    Hipster-o-meter goal
+                    <div class="column" style="padding: 1%;">
+                        <div class="ui animated button large" id='skipBut' style="width: 50%;">
+                            <div class="visible content" id="skipButton">Skip it!</div>
+                            <div class="hidden content" id="skipHidden">
+                                2Pleb4Me <i class="fa fa-forward"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -94,10 +94,9 @@
 
 
 </div>
-
-
-
-
+<div style="width: 100%; text-align: center; padding: 30px 0">
+    Created By <a href="http://jcdesimp.com">Joseph DeSimpliciis</a>, John Murray, Daniel Santoro, and Rafael Lopez
+</div>
 
 
 <script>
@@ -105,10 +104,7 @@
     $("#power").click(function () {
         $.ajax({
             url: '/bose/power', success: function (result) {
-                $("#feedback").html("Updated!!");
-                setTimeout(function () {
-                    $("#feedback").html("Waiting!");
-                }, 2000);
+
             }
         });
     });
@@ -117,10 +113,7 @@
     $("#voldown").click(function () {
         $.ajax({
             url: '/bose/volumedown', success: function (result) {
-                $("#feedback").html("Updated!!");
-                setTimeout(function () {
-                    $("#feedback").html("Waiting!");
-                }, 2000);
+
             }
         });
     });
@@ -129,13 +122,129 @@
     $("#volup").click(function () {
         $.ajax({
             url: '/bose/volumeup', success: function (result) {
-                $("#feedback").html("Updated!!");
-                setTimeout(function () {
-                    $("#feedback").html("Waiting!");
-                }, 2000);
+
+
             }
         });
     });
+
+    $("#skipBut").click(function () {
+        $.ajax({
+            url: '/bose/next_track', success: function (result) {
+
+
+            }
+        });
+    });
+
+
+    // updating song data
+    var track = "";
+    var artist = "";
+    var album = "";
+    var artwork = "";
+
+    var targetHipster = 30;
+    var currHipster = 0;
+
+    var lastSong = "";
+
+    setInterval(function () {
+        updateSong();
+        doTheHotnessStuff();
+    }, 2000);
+
+    $(window).load(function () {
+        updateSong();
+        setTimeout(doTheHotnessStuff, 200);
+        updateTargetHipster(targetHipster);
+    });
+
+    function updateSong() {
+        $.ajax({
+            url: '/bose/now_playing', success: function (result) {
+                console.log(result);
+                track = result['nowPlaying']['track'];
+                $("#track").html(track);
+                artist = result['nowPlaying']['artist'];
+                $("#artist").html(artist);
+                album = result['nowPlaying']['album']
+                $("#album").html(album);
+                artwork = result['nowPlaying']['art']['$t']
+                $("#artwork").attr('src', artwork);
+                reactToDifference();
+            }
+        });
+    }
+
+    function doTheHotnessStuff() {
+        if (lastSong !== track) {
+            lastSong = track;
+            $.ajax({
+                url: '/en/en?artist="' + artist + '"&songname="' + track + '"', success: function (result) {
+                    console.log(result);
+                    updateSongHipster(result["hotness"] * 100)
+                }
+            })
+        }
+    }
+
+
+    // clicks for adjusting target
+    $('#lessHip').click(function () {
+        updateTargetHipster(targetHipster - 5);
+    });
+
+    $('#moreHip').click(function () {
+        updateTargetHipster(targetHipster + 5);
+    });
+
+
+    function updateSongHipster(val) {
+        if (val < 0) val = 0;
+        if (val > 100) val = 100;
+        currHipster = val;
+        $('#songBar').css('width', val.toString() + '%');
+        reactToDifference();
+    }
+
+    function updateTargetHipster(val) {
+        if (val < 0) val = 0;
+        if (val > 100) val = 100;
+        targetHipster = val;
+        $('#targetBar').css('width', val.toString() + '%');
+        reactToDifference();
+    }
+
+    function reactToDifference() {
+        console.log(targetHipster);
+        console.log(currHipster);
+        if (currHipster > targetHipster + 10) {  // too hipster
+            setSongHipsterColor('red');
+            decSkipButton('Skip this hipster garbage!', '2hipster4me', 'red');
+        } else if (currHipster < targetHipster - 10) {   // too pleb
+            setSongHipsterColor('red');
+            decSkipButton('Skip this pleb noise!', '2pleb4me', 'red');
+        } else { // just right
+            setSongHipsterColor('green');
+            decSkipButton('Skip', '', '');
+        }
+    }
+
+    function setSongHipsterColor(color) {
+        $('#songBar').closest('.progress').removeClass('green yellow red')
+                .addClass(color);
+
+    }
+
+    function decSkipButton(shown, hidden, color) {
+        $('#skipButton').html(shown);
+        $('#skipHidden').html(hidden + ' <i class="fa fa-forward"></i>')
+                .closest('.button')
+                .removeClass('green yellow red')
+                .addClass(color);
+    }
+
 
 </script>
 </body>

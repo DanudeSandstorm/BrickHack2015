@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var bose = require('../APIadaptors/bose');
+var hotness = require('../APIadaptors/hotnessfetcher');
 
 bose.setRoot('http://192.168.2.6:8090', function () {
 
@@ -69,7 +70,7 @@ router.get('/now_playing', function (req, res, next) {
 
         if (!err) {
             data = JSON.parse(data);
-            console.log(data['nowPlaying']);
+            //console.log(data['nowPlaying']);
             if (req.query["render"]) {
                 res.render('objects/song', {song: data['nowPlaying']});
             } else {

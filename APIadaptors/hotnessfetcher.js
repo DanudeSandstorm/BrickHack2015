@@ -11,7 +11,11 @@ module.exports = {
                 //console.log(body);
                 body = JSON.parse(body);
                 //console.log(body['response'].songs[0].song_hotttnesss);
-                cb(null, body['response'].songs[0].song_hotttnesss);
+                if(body['response'].songs.length == 0) {
+                    cb(null, 1);
+                    return;
+                }
+                cb(null, 1-body['response'].songs[0].song_hotttnesss);
             }
             else {
                 cb(error);
