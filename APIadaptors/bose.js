@@ -15,7 +15,7 @@ module.exports = {
 
     key: function (press, keyName, cb) {
 
-        var rqBody = '<key state="'+ press + '" sender="Gabbo">' + keyName + '</key>';
+         var rqBody = '<key state="'+ press + '" sender="Gabbo">' + keyName + '</key>';
 
         request.post(  {
             url:rootPath + '/key',
@@ -86,13 +86,22 @@ module.exports = {
         })
     },
 
-    addStation: function(source, sourceAccount, token, cb) {
-        request.post({
-            url: rootPath + '/addStation', //Pandora only
+    addStation: function(source, sourceAccount, token, string, cb) {
+        var rqBody = '<addStation source="'+ source + '" sourceAccount="'+ sourceAccount + '" token="'+ token + '">' + string + '</addStation>';
+
+        request.post(  {
+            url:rootPath + '/key',
+            body : rqBody,
             headers: {'Content-Type': 'text/xml'}
         }, function (err, res, body) {
 
-        })
+            // console.log(parser.toJson(body));
+            if (!err) {
+                cb(null, parser.toJson(body, parserOptions));
+            } else {
+                console.log(err);
+                cb(err);
+            }
+        });
     }
-
 };
