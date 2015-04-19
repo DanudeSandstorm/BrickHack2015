@@ -8,9 +8,9 @@ module.exports = {
         request('http://developer.echonest.com/api/v4/song/search?api_key=HV0DZLGBZDYGTZPY1' +
             '&format=json&results=1&title=' + track + '&bucket=song_hotttnesss&artist=' + artist, function (error, response, body) {
             if (!error && response.statusCode == 200) {
-                console.log(body);
+                //console.log(body);
                 body = JSON.parse(body);
-                console.log(body['response'].songs[0].song_hotttnesss);
+                //console.log(body['response'].songs[0].song_hotttnesss);
                 cb(null, body['response'].songs[0].song_hotttnesss);
             }
             else {
