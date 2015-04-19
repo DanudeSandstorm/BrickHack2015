@@ -5,18 +5,100 @@
     <% include includes/head_includes.ejs %>
 </head>
 <body>
-<h1><%= title %></h1>
 
-<div class="ui primary button" id="power">
-    <i class="fa fa-power-off"></i>
+<div class="ui padded three row grid">
+
+    <div class="row">
+        <div class="eight wide left aligned column">
+            <div class="segment">
+                <h1><%= title %></h1>
+            </div>
+        </div>
+
+        <div class="eight wide right aligned column">
+            <div class="ui right floated search">
+                <div class="ui icon input">
+                    <input class="prompt" type="text" placeholder="Music Search">
+                    <i class="search icon"></i>
+                </div>
+                <div class="results"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="ui three column grid">
+            <div class="left floated column">
+                <div class="ui primary button" id="power">
+                    <i class="fa fa-power-off"></i>
+                </div>
+            </div>
+
+            <div class="center aligned column">
+                play/pause, skip, like, dislike
+            </div>
+
+            <div class="left floated column">
+                <div class="ui icon buttons">
+                    <div class="ui button" id="voldown"><i class="fa fa-volume-down"></i></div>
+                    <div class="ui button" id="volup"><i class="fa fa-volume-up"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="ui three column grid">
+            <div class="left floated column">
+                album art
+            </div>
+
+            <div class="center aligned column">
+                <p>
+                    Song title
+                </p>
+                <p>
+                    Artist
+                </p>
+                <p>
+                    Album
+                </p>
+                <div id="feedback">
+                    Waiting!
+                </div>
+            </div>
+
+            <div class="left floated column">
+                <div class="row">
+                    <div class="ui <%= color%> progress">
+                        <div class="label">Song's Hipster Score</div>
+                        <div class="bar">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                    Hipster-o-meter actual
+                </div>
+
+                <div class="row">
+                    <div class="ui progress">
+                        <div class="label">Your Hipster Level</div>
+                        <div class="bar">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                    Hipster-o-meter goal
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
-<div class="ui icon buttons">
-    <div class="ui button" id="voldown"><i class="fa fa-volume-down"></i></div>
-    <div class="ui button" id="volup"><i class="fa fa-volume-up"></i></div>
-</div>
-<div id="feedback">
-    Waiting!
-</div>
+
+
+
+
+
 
 <script>
     // power button
