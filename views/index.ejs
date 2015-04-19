@@ -4,7 +4,7 @@
     <title><%= title %></title>
     <% include includes/head_includes.ejs %>
 </head>
-<body>
+<body style="background: rgba(167, 167, 167, 0.56);">
 
 <div class="ui padded twelve row grid" style="margin-bottom: 100px">
 
@@ -16,20 +16,21 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="ui three column grid">
-            <div class="left floated column">
+    <div class="row" >
+        <div class="ui two column grid" style="text-align: center; margin: 0">
+            <div class="column">
                 <div class="fluid ui primary button" id="power">
                     <i class="fa fa-power-off"></i>
                 </div>
-            </div>
-
-            <div class="left floated column">
                 <div class="fluid ui icon buttons">
                     <div class="ui button" id="voldown"><i class="fa fa-volume-down"></i></div>
                     <div class="ui button" id="volup"><i class="fa fa-volume-up"></i></div>
                 </div>
             </div>
+
+
+
+
         </div>
     </div>
 
@@ -44,7 +45,7 @@
                 <h2 id="album">Album Name</h2>
 
                 <div>
-                    <img id="artwork" src="" alt="artwork" style="max-width: 300px;"/>
+                    <img id="artwork" src="" alt="" style="max-width: 300px;"/>
                 </div>
             </div>
 
@@ -171,6 +172,10 @@
                 album = result['nowPlaying']['album']
                 $("#album").html(album);
                 artwork = result['nowPlaying']['art']['$t']
+                console.log(artwork);
+                if(typeof artwork == 'undefined') {
+                    artwork = '/images/default.jpg';
+                }
                 $("#artwork").attr('src', artwork);
                 reactToDifference();
             }
@@ -182,7 +187,7 @@
             lastSong = track;
             $.ajax({
                 url: '/en/en?artist="' + artist + '"&songname="' + track + '"', success: function (result) {
-                    console.log(result);
+                    //console.log(result);
                     updateSongHipster(result["hotness"] * 100)
                 }
             })
@@ -224,7 +229,7 @@
             decSkipButton('Skip this hipster garbage!', '2hipster4me', 'red');
         } else if (currHipster < targetHipster - 10) {   // too pleb
             setSongHipsterColor('red');
-            decSkipButton('Skip this pleb noise!', '2pleb4me', 'red');
+            decSkipButton('Skip this mainstream pleb noise!', '2pleb4me', 'red');
         } else { // just right
             setSongHipsterColor('green');
             decSkipButton('Skip', '', '');
