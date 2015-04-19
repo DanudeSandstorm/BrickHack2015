@@ -1,4 +1,5 @@
 var request = require('request');
+var parser = require('xml2json');
 var rootPath = "";
 
 module.exports = {
@@ -17,9 +18,9 @@ module.exports = {
             headers: {'Content-Type': 'text/xml'}
         }, function (err, res, body) {
 
-            console.log(body);
+            console.log(parser.toJson(body));
             if (!err) {
-                cb(null, body);
+                cb(null, parser.toJson(body));
             } else {
                 console.log(err);
                 cb(err);
