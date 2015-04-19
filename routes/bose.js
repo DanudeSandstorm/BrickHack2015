@@ -126,13 +126,17 @@ router.get('/next_track', function (req, res, next) {
 router.get('/search', function (reg,res, next) {
     bose.getSources(function(err, body){
         console.log(body);
-        var source;
-        var sourceAccount;
-        var searchString;
+        var source = body['source'];
+        var sourceAccount = body['sourceAccount'];
+        var searchString = body['searchString'];
 
-        bose.search(){
+        bose.search(source, sourceAccount, searchString, function(err, body){
 
         });
     });
 });
+
+router.get('/addStation', function (reg, res, next) {
+    bose.addStation()
+})
 module.exports = router;

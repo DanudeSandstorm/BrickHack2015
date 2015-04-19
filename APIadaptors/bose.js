@@ -70,7 +70,7 @@ module.exports = {
         });
     },
 
-    search: function(cb, source, sourceAccount, string) {
+    search: function(source, sourceAccount, string, cb) {
         request.post({
             url: rootPath + '/searchStation', //Pandora only
             headers: {'Content-Type': 'text/xml'}
@@ -83,6 +83,15 @@ module.exports = {
                 console.log(err);
                 cb(err);
             }
+        })
+    },
+
+    addStation: function(source, sourceAccount, token, cb) {
+        request.post({
+            url: rootPath + '/addStation', //Pandora only
+            headers: {'Content-Type': 'text/xml'}
+        }, function (err, res, body) {
+
         })
     }
 

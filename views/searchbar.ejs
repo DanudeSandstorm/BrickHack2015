@@ -188,28 +188,33 @@
 
 <section class="main">
     <form class="search" method="post">
-        <input id="searchinput" type="text" name="q" placeholder="Search..." />
+        <div>
+            <input id="searchinput" type="text" name="q" placeholder="Search..." />
+            <div class="ui button" id="searchBtn">Connect</div>
+        </div>
         <ul id="results" class="results" >
         </ul>
     </form>
 </section>
 
 <script>
-$.ajax({
-    url: '/search',
-    type: 'POST',
-    data: results,
-    success: function(data) {
-        for(i=0;i<=data.length;i++){
-            var results = document.getElementsById('results');
-            var li = document.createElement('li');
+$('#searchBtn').click(function(){
+    $.ajax({
+        url: '/search',
+        type: 'POST',
+        data: results,
+        success: function(data) {
+            for(i=0;i<=data.length;i++){
+                var results = document.getElementsById('results');
+                var li = document.createElement('li');
 
-            li.innerHTML = "<a id='"+i+"li'>" + data[i]['artist'] + "<br /></a>";
-            results.appendChild(li);
+                li.innerHTML = "<a id='"+i+"li'>" + data[i]['artist'] + "<br /></a>";
+                results.appendChild(li);
 
-            var a = document.getElementById('"+i+"li');
-            a.href = data[i]['url'];
+                var a = document.getElementById('"+i+"li');
+                a.href = data[i]['url'];
+            }
         }
-    }
+    });
 });
 </script>
