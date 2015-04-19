@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var bose = require('./routes/bose');
+var echo = require('./routes/echonest');
 var jumanji = require('jumanji');
 
 var app = express();
@@ -27,6 +28,7 @@ app.use(jumanji);
 
 app.use('/', routes);
 app.use('/bose', bose);
+app.use('/en', echo);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
